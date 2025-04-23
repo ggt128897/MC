@@ -2,41 +2,53 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>月經紀錄 App</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png" type="image/png">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>月經紀錄</h1>
+    <h1>月經紀錄 App</h1>
+    <p>記錄你的週期、症狀與每日狀態</p>
 
-    <label for="startDate">月經開始日期：</label>
-    <input type="date" id="startDate"/>
-
-    <label for="endDate">月經結束日期：</label>
-    <input type="date" id="endDate"/>
-
-    <div id="dailyInputs"></div>
-
-    <label for="mode">使用目的：</label>
-    <select id="mode">
-      <option value="none">--請選擇--</option>
-      <option value="avoid">避孕</option>
-      <option value="conceive">備孕</option>
-    </select>
+    <label>月經開始日：<input type="date" id="startDate" /></label>
+    <label>月經天數：<input type="number" id="periodLength" value="5" /></label>
+    <label>週期長度（日）：<input type="number" id="cycleLength" value="28" /></label>
+    
+    <h2>每日紀錄</h2>
+    <label>分泌量：
+      <select id="flow">
+        <option value="少">少</option>
+        <option value="中">中</option>
+        <option value="多">多</option>
+      </select>
+    </label>
+    <label>症狀：
+      <select multiple id="symptoms">
+        <option value="腹痛">腹痛</option>
+        <option value="頭痛">頭痛</option>
+        <option value="疲勞">疲勞</option>
+        <option value="腹脹">腹脹</option>
+      </select>
+    </label>
+    <label>情緒：
+      <select id="mood">
+        <option value="平靜">平靜</option>
+        <option value="易怒">易怒</option>
+        <option value="焦慮">焦慮</option>
+        <option value="開心">開心</option>
+      </select>
+    </label>
+    <label>體溫（°C）：<input type="number" id="temperature" step="0.1" /></label>
 
     <button onclick="saveData()">儲存紀錄</button>
+    <button onclick="predictNextPeriod()">預測下次月經</button>
 
-    <h2>預測結果</h2>
-    <div id="prediction"></div>
-
-    <h2>歷史紀錄</h2>
-    <ul id="historyList"></ul>
-
-    <footer>製作人：準老公</footer>
+    <div id="result"></div>
   </div>
 
+  <footer>製作人：準老公</footer>
   <script src="script.js"></script>
 </body>
 </html>
