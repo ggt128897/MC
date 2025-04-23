@@ -1,118 +1,40 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>月經紀錄 App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f4f6;
-            margin: 0;
-            padding: 0;
-        }
-        .app-container {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        header h1 {
-            margin: 0;
-        }
-        form label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input[type="date"], input[type="number"], button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #777;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>月經紀錄 App</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png" type="image/png">
 </head>
 <body>
-    <div class="app-container">
-        <header>
-            <h1>月經紀錄</h1>
-            <p>追蹤並預測你的月經週期</p>
-        </header>
+  <div class="container">
+    <h1>月經紀錄</h1>
 
-        <form id="periodForm">
-            <label for="startDate">請輸入月經開始日期：</label>
-            <input type="date" id="startDate" required>
-            <label for="cycleLength">請輸入月經週期（天）：</label>
-            <input type="number" id="cycleLength" required>
-            <button type="submit">預測下次月經</button>
-        </form>
+    <label for="startDate">月經開始日期：</label>
+    <input type="date" id="startDate" />
 
-        <div id="result"></div>
+    <label for="endDate">月經結束日期：</label>
+    <input type="date" id="endDate" />
 
-        <footer>
-            <p>製作人：準老公</p>
-        </footer>
-    </div>
+    <label for="flow">分泌量：</label>
+    <select id="flow">
+      <option value="light">少量</option>
+      <option value="moderate">中等</option>
+      <option value="heavy">大量</option>
+    </select>
 
-    <script>
-        document.getElementById("periodForm").addEventListener("submit", function(e) {
-            e.preventDefault();
+    <button onclick="saveData()">儲存紀錄</button>
 
-            const startDate = new Date(document.getElementById("startDate").value);
-            const cycleLength = parseInt(document.getElementById("cycleLength").value);
-            
-            let nextPeriodDate = new Date(startDate);
-            nextPeriodDate.setDate(startDate.getDate() + cycleLength);
+    <h2>預測結果</h2>
+    <div id="prediction"></div>
 
-            // 計算排卵日
-            let ovulationDate = new Date(startDate);
-            ovulationDate.setDate(startDate.getDate() + Math.floor(cycleLength / 2));  // 假設排卵發生在週期的中間
-            
-            // 計算避孕期與備孕期
-            let contraceptionStart = new Date(ovulationDate);
-            contraceptionStart.setDate(ovulationDate.getDate() - 4);  // 避孕期開始於排卵日之前4天
-            let contraceptionEnd = new Date(ovulationDate);
-            contraceptionEnd.setDate(ovulationDate.getDate() + 2);  // 避孕期結束於排卵日後2天
+    <h2>歷史紀錄</h2>
+    <ul id="historyList"></ul>
 
-            let conceptionStart = new Date(ovulationDate);
-            conceptionStart.setDate(ovulationDate.getDate() - 5);  // 備孕期開始於排卵日之前5天
-            let conceptionEnd = new Date(ovulationDate);
-            conceptionEnd.setDate(ovulationDate.getDate() + 1);  // 備孕期結束於排卵日後1天
+    <footer>製作人：準老公</footer>
+  </div>
 
-            // 顯示結果
-            document.getElementById("result").innerHTML = `
-                預估下次月經時間為：${nextPeriodDate.toLocaleDateString()}<br>
-                排卵日：${ovulationDate.toLocaleDateString()}<br>
-                避孕期：${contraceptionStart.toLocaleDateString()} - ${contraceptionEnd.toLocaleDateString()}<br>
-                備孕期：${conceptionStart.toLocaleDateString()} - ${conceptionEnd.toLocaleDateString()}
-            `;
-        });
-    </script>
+  <script src="script.js"></script>
 </body>
-</html> 
+</html>
